@@ -33,7 +33,7 @@ defmodule Solutions.Day2 do
   defp reports(input) do
     input
     |> String.split("\n", trim: true)
-    |> Enum.map(fn line -> line |> String.split() |> Enum.map(&String.to_integer/1) end)
+    |> Enum.map(fn line -> line |> String.split() |> Util.integers() end)
   end
 
   defp safe?(report) do
