@@ -1,4 +1,6 @@
 defmodule Solutions.Day2 do
+  alias Util.Parsing
+
   @behaviour Solution
 
   @test_input """
@@ -33,7 +35,7 @@ defmodule Solutions.Day2 do
   defp reports(input) do
     input
     |> String.split("\n", trim: true)
-    |> Enum.map(fn line -> line |> String.split() |> Util.integers() end)
+    |> Enum.map(fn line -> line |> String.split() |> Parsing.integers() end)
   end
 
   defp safe?(report) do

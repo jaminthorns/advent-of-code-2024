@@ -18,4 +18,6 @@ Run `mix test --only day_<DAY>` to run tests for a specific day's solution.
 
 Run `mix start <DAY>` to generate a solution module file and fetch the input.
 
-Run `mix solve <DAY>` to print the solution for a day.
+Run `mix solve <DAY>` to print the solution for both parts a day.
+
+Run `mix solve <DAY> <PART>` to print the solution for single part of a day.

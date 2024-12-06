@@ -3,14 +3,29 @@ defmodule Solution do
   @callback solve_part_2(input :: binary) :: any
 
   @doc """
-  Solve a puzzle for a given `day` and `part`.
+  Solve both parts of a puzzle for a given `day`.
   """
   def solve(day) do
-    module = Module.concat(["Solutions", "Day#{day}"])
-    input = day |> Input.path() |> File.read!()
+    module = module(day)
+    input = Input.read(day)
 
     {module.solve_part_1(input), module.solve_part_2(input)}
   end
+
+  @doc """
+  Solve a puzzle for a given `day` and `part`.
+  """
+  def solve(day, part) do
+    module = module(day)
+    input = Input.read(day)
+
+    case part do
+      1 -> module.solve_part_1(input)
+      2 -> module.solve_part_2(input)
+    end
+  end
+
+  defp module(day), do: Module.concat(["Solutions", "Day#{day}"])
 
   @doc """
   Get the day numbers of all implemented solutions.

@@ -1,4 +1,6 @@
 defmodule Solutions.Day5 do
+  alias Util.Parsing
+
   @behaviour Solution
 
   @test_input """
@@ -67,13 +69,13 @@ defmodule Solutions.Day5 do
       rules
       |> String.split()
       |> Enum.map(&String.split(&1, "|"))
-      |> Enum.map(&Util.integers/1)
+      |> Enum.map(&Parsing.integers/1)
 
     updates =
       updates
       |> String.split()
       |> Enum.map(&String.split(&1, ","))
-      |> Enum.map(&Util.integers/1)
+      |> Enum.map(&Parsing.integers/1)
 
     {rules, updates}
   end

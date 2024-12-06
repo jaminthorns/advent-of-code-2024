@@ -21,6 +21,13 @@ defmodule Input do
     end
   end
 
-  # Get the file path of the puzzle input for a given `day`
+  @doc """
+  Get the file path of the puzzle input for a given `day`
+  """
   def path(day), do: "inputs/day_#{day}.txt"
+
+  @doc """
+  Read the puzzle input for a given `day`.
+  """
+  def read(day), do: day |> path() |> File.read!()
 end
