@@ -5,13 +5,23 @@ defmodule Solution do
   @doc """
   Solve a puzzle for a given `day` and `part`.
   """
-  def solve(day, part) do
+  def solve(day) do
     module = Module.concat(["Solutions", "Day#{day}"])
-    input = File.read!("input/day_#{day}.txt")
+    input = day |> Input.path() |> File.read!()
 
-    case part do
-      1 -> module.solve_part_1(input)
-      2 -> module.solve_part_2(input)
-    end
+    {module.solve_part_1(input), module.solve_part_2(input)}
+  end
+
+  @doc """
+  Get the day numbers of all implemented solutions.
+  """
+  def implemented_days do
+    :advent_of_code
+    |> Application.spec(:modules)
+    |> Enum.map(&Module.split/1)
+    |> Enum.filter(&(List.first(&1) == "Solutions"))
+    |> Enum.map(&Enum.at(&1, 1))
+    |> Enum.map(&String.replace(&1, "Day", ""))
+    |> Enum.map(&String.to_integer/1)
   end
 end

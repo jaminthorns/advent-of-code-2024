@@ -6,17 +6,16 @@ Run `mix deps.get` to fetch dependencies.
 
 Run `mix compile` to compile the application.
 
+Run `mix inputs` to fetch the inputs for all implemented solutions.
+
 ## Testing
 
-Run `mix test` to run tests.
+Run `mix test` to run tests for all solutions.
 
 Run `mix test --only day_<DAY>` to run tests for a specific day's solution.
 
 ## Solving Puzzles
 
-Run `mix solve <DAY>` to generate input and solution module files.
+Run `mix start <DAY>` to generate a solution module file and fetch the input.
 
-Run `iex -S mix` to start an IEx session.
-
-Run `Solution.solve(day, part)`, where `day` is the day of the puzzle (`1` -
-`25`) and `part` is the part of the puzzle (`1` or `2`).
+Run `mix solve <DAY>` to print the solution for a day.
