@@ -39,9 +39,10 @@ defmodule Solutions.Day6 do
     map = Grid.new(input)
     start_position = start_position(map)
     start_direction = Grid.up()
+    original_path = path(map, start_position, start_direction)
 
     map
-    |> obstructed_maps()
+    |> obstructed_maps(original_path)
     |> Task.async_stream(fn obstructed_map ->
       obstructed_map
       |> path(start_position, start_direction)
@@ -78,16 +79,17 @@ defmodule Solutions.Day6 do
     |> Stream.flat_map(&Function.identity/1)
   end
 
-  defp obstructed_maps(map) do
-    map
-    |> Enum.filter(fn {_, symbol} -> symbol == "." end)
-    |> Enum.map(&elem(&1, 0))
+  defp obstructed_maps(map, original_path) do
+    original_path
+    |> Stream.map(&elem(&1, 0))
+    |> Stream.uniq()
+    |> Stream.reject(&(Map.get(map, &1) == "^"))
     |> Stream.map(&Map.put(map, &1, "#"))
   end
 
   defp repeats?(path) do
     Enum.reduce_while(path, {false, MapSet.new()}, fn step, {_, visited} ->
-      if MapSet.member?(visited, step),
+      if step in visited,
         do: {:halt, {true, visited}},
         else: {:cont, {false, MapSet.put(visited, step)}}
     end)
