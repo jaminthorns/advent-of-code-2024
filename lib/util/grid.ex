@@ -7,7 +7,7 @@ defmodule Util.Grid do
     end
   end
 
-  def forward(position, direction), do: Stream.iterate(position, &step(&1, direction))
+  def forward(position, translation), do: Stream.iterate(position, &step(&1, translation))
 
   def step({x, y}, {dx, dy}), do: {x + dx, y + dy}
 
