@@ -38,5 +38,6 @@ defmodule Solution do
     |> Enum.map(&Enum.at(&1, 1))
     |> Enum.map(&String.replace(&1, "Day", ""))
     |> Enum.map(&String.to_integer/1)
+    |> Enum.sort()
   end
 end
