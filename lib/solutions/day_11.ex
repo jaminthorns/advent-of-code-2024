@@ -13,35 +13,43 @@ defmodule Solutions.Day11 do
   """
   def solve_part_1(input) do
     input
-    |> stones()
-    |> blinks(25)
-    |> Enum.count()
+    |> stone_counts()
+    |> blinking(25)
+    |> Map.values()
+    |> Enum.sum()
   end
 
-  # @doc """
-  # iex> solve_part_2(#{inspect(@test_input)})
-  # nil
-  # """
+  @doc """
+  iex> solve_part_2(#{inspect(@test_input)})
+  65601038650482
+  """
   def solve_part_2(input) do
     input
-    |> stones()
-    |> blinks(75)
-    |> Enum.count()
+    |> stone_counts()
+    |> blinking(75)
+    |> Map.values()
+    |> Enum.sum()
   end
 
-  defp stones(input) do
+  defp stone_counts(input) do
     input
     |> String.split()
     |> Parsing.integers()
+    |> Map.new(&{&1, 1})
   end
 
-  defp blinks(stones, count) do
-    stones
+  defp blinking(stone_counts, blinks) do
+    stone_counts
     |> Stream.iterate(&blink/1)
-    |> Enum.at(count)
+    |> Enum.at(blinks)
   end
 
-  defp blink(stones), do: Enum.flat_map(stones, &transform/1)
+  defp blink(stone_counts) do
+    stone_counts
+    |> Enum.flat_map(fn {number, count} -> number |> transform() |> Enum.map(&{&1, count}) end)
+    |> Enum.group_by(&elem(&1, 0), &elem(&1, 1))
+    |> Map.new(fn {number, counts} -> {number, Enum.sum(counts)} end)
+  end
 
   def transform(stone) do
     digits = Integer.digits(stone)
